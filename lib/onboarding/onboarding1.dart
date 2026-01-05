@@ -31,7 +31,27 @@ class Onboarding1Screen extends StatelessWidget {
               ),
 
               const Spacer(), // Temporary spacer to center content later
-              const Text('Onboarding Screen 1'), // Placeholder text
+              const SizedBox(height: 20),
+
+              Expanded(
+                flex: 3,
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE0F0FF),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(40.0),
+                    child: Image.asset(
+                      'assets/images/doctor.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
+
+              const Spacer(), // Placeholder text
               const Spacer(),
             ],
           ),
