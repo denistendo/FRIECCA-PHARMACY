@@ -5,6 +5,28 @@ void main() {
   runApp(const MyApp());
 }
 
+/* =========================
+   RESPONSIVE HELPER
+========================= */
+class Responsive {
+  static double scale(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
+    if (width < 360) return 0.85;
+    if (width < 480) return 0.95;
+    if (width < 600) return 1.0;
+    if (width < 900) return 1.15;
+    return 1.3;
+  }
+
+  static double clamp(double value, double min, double max) {
+    return value.clamp(min, max);
+  }
+}
+
+/* =========================
+   APP
+========================= */
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -17,6 +39,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/* =========================
+   SPLASH SCREEN
+========================= */
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -35,30 +60,25 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    
-    // Dots animation
+
     _dotsController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     )..repeat();
 
-    // Fade in animation
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
-    _fadeAnimation = CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeInOut,
-    );
+    _fadeAnimation =
+        CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut);
     _fadeController.forward();
 
-    // Pulse animation for logo
     _pulseController = AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     )..repeat(reverse: true);
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.08).animate(
+    _pulseAnimation = Tween(begin: 1.0, end: 1.08).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
   }
@@ -73,216 +93,206 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final scale = Responsive.scale(context);
+
+    final logoSize = Responsive.clamp(
+      math.min(size.width, size.height) * 0.28,
+      120,
+      220,
+    );
+    final iconSize = logoSize * 0.48;
+
+    final titleSize = Responsive.clamp(42 * scale, 36, 68);
+    final subtitleSize = Responsive.clamp(20 * scale, 18, 32);
+    final taglineSize = Responsive.clamp(14 * scale, 12, 20);
+    final smallFont = Responsive.clamp(10 * scale, 9, 14);
+
+    final spacingLarge = Responsive.clamp(size.height * 0.05, 24, 60);
+    final spacingMedium = Responsive.clamp(size.height * 0.03, 16, 40);
+    final dividerWidth = Responsive.clamp(size.width * 0.16, 60, 120);
+    final dotSize = Responsive.clamp(10 * scale, 8, 14);
+    final dotMargin = Responsive.clamp(6 * scale, 4, 10);
+    final footerBottom = Responsive.clamp(size.height * 0.045, 20, 50);
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFF8FBFF),
-              Color(0xFFFFFFFF),
-              Color(0xFFF0F7FF),
-            ],
+            colors: [Color(0xFFF8FBFF), Colors.white, Color(0xFFF0F7FF)],
           ),
         ),
         child: SafeArea(
           child: FadeTransition(
             opacity: _fadeAnimation,
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Animated Logo with glow effect
-                        ScaleTransition(
-                          scale: _pulseAnimation,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFF0066FF).withOpacity(0.3),
-                                  blurRadius: 30,
-                                  spreadRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: Container(
-                              width: 140,
-                              height: 140,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xFF0066FF),
-                                    Color(0xFF0052CC),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ScaleTransition(
+                              scale: _pulseAnimation,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFF0066FF)
+                                          .withOpacity(0.3),
+                                      blurRadius: 30,
+                                      spreadRadius: 5,
+                                    ),
                                   ],
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 20,
-                                    offset: const Offset(0, 10),
-                                  ),
-                                ],
-                              ),
-                              child: const Icon(
-                                Icons.medical_services_rounded,
-                                size: 70,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-
-                        // App Name with gradient
-                        ShaderMask(
-                          shaderCallback: (bounds) => const LinearGradient(
-                            colors: [
-                              Color(0xFF0066FF),
-                              Color(0xFF0052CC),
-                            ],
-                          ).createShader(bounds),
-                          child: const Text(
-                            'Friecca',
-                            style: TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              letterSpacing: -0.5,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          'Pharmacy',
-                          style: TextStyle(
-                            fontSize: 38,
-                            fontWeight: FontWeight.w300,
-                            color: Color(0xFF0066FF),
-                            letterSpacing: 3,
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-
-                        // Divider line
-                        Container(
-                          width: 60,
-                          height: 3,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFF0066FF),
-                                Color(0xFF00CCFF),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-
-                        // Tagline with better styling
-                        Text(
-                          'Professional healthcare,',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.grey[700],
-                            fontWeight: FontWeight.w400,
-                            height: 1.5,
-                          ),
-                        ),
-                        Text(
-                          'personalized for you.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.grey[700],
-                            fontWeight: FontWeight.w400,
-                            height: 1.5,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                // Loading and footer section
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      // Modern animated loading dots
-                      SizedBox(
-                        height: 20,
-                        child: AnimatedBuilder(
-                          animation: _dotsController,
-                          builder: (context, child) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: List.generate(3, (index) {
-                                final delay = index * 0.2;
-                                final animationValue = (_dotsController.value - delay).clamp(0.0, 1.0);
-                                final scale = math.sin(animationValue * math.pi);
-                                
-                                return Transform.scale(
-                                  scale: 0.5 + (scale * 0.5),
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(horizontal: 6),
-                                    width: 12,
-                                    height: 12,
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          Color(0xFF0066FF),
-                                          Color(0xFF00CCFF),
-                                        ],
-                                      ),
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: const Color(0xFF0066FF).withOpacity(0.4),
-                                          blurRadius: 8,
-                                          spreadRadius: 1,
-                                        ),
+                                child: Container(
+                                  width: logoSize,
+                                  height: logoSize,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Color(0xFF0066FF),
+                                        Color(0xFF0052CC),
                                       ],
                                     ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.08),
+                                        blurRadius: 20,
+                                        offset: const Offset(0, 10),
+                                      ),
+                                    ],
                                   ),
-                                );
-                              }),
-                            );
-                          },
+                                  child: Icon(
+                                    Icons.medical_services_rounded,
+                                    size: iconSize,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: spacingLarge),
+                            ShaderMask(
+                              shaderCallback: (bounds) =>
+                                  const LinearGradient(
+                                colors: [
+                                  Color(0xFF0066FF),
+                                  Color(0xFF0052CC)
+                                ],
+                              ).createShader(bounds),
+                              child: Text(
+                                'Friecca',
+                                style: TextStyle(
+                                  fontSize: titleSize,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 6),
+                            Text(
+                              'Pharmacy',
+                              style: TextStyle(
+                                fontSize: subtitleSize,
+                                letterSpacing: 3,
+                                fontWeight: FontWeight.w300,
+                                color: const Color(0xFF0066FF),
+                              ),
+                            ),
+                            SizedBox(height: spacingMedium),
+                            Container(
+                              width: dividerWidth,
+                              height: 3,
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF0066FF),
+                                    Color(0xFF00CCFF)
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                            SizedBox(height: spacingMedium),
+                            Text(
+                              'Professional healthcare,\npersonalized for you.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: taglineSize,
+                                height: 1.5,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 50),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            height: dotSize * 1.4,
+                            child: AnimatedBuilder(
+                              animation: _dotsController,
+                              builder: (_, __) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(3, (index) {
+                                    final delay = index * 0.2;
+                                    final value = (_dotsController.value - delay)
+                                        .clamp(0.0, 1.0);
+                                    final scale =
+                                        0.5 + math.sin(value * math.pi) * 0.5;
 
-                      // Footer with refined styling
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                        child: Text(
-                          'FRIECCA PHARMACY LTD',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey[500],
-                            letterSpacing: 2.5,
-                            fontWeight: FontWeight.w500,
+                                    return Transform.scale(
+                                      scale: scale,
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: dotMargin),
+                                        width: dotSize,
+                                        height: dotSize,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Color(0xFF0066FF),
+                                              Color(0xFF00CCFF),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                );
+                              },
+                            ),
                           ),
-                        ),
+                          SizedBox(height: footerBottom),
+                          Text(
+                            'FRIECCA PHARMACY LTD',
+                            style: TextStyle(
+                              fontSize: smallFont,
+                              letterSpacing: 2.5,
+                              color: Colors.grey[500],
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: footerBottom),
+                        ],
                       ),
-                      
-                      const SizedBox(height: 35),
-                    ],
-                  ),
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),
