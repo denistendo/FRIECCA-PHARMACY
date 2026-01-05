@@ -5,6 +5,9 @@ class Onboarding1Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen size for responsiveness
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -12,12 +15,12 @@ class Onboarding1Screen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             children: [
-              // Skip Button
+              // 1. Skip Button (Top Right)
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    // TODO: Skip to home/login
+                    // TODO: Navigate to home or login screen
                   },
                   child: const Text(
                     'Skip',
@@ -30,15 +33,15 @@ class Onboarding1Screen extends StatelessWidget {
                 ),
               ),
 
-              const Spacer(), // Temporary spacer to center content later
               const SizedBox(height: 20),
 
+              // 2. Doctor Illustration
               Expanded(
                 flex: 3,
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE0F0FF),
+                    color: const Color(0xFFE0F0FF), // Light blue background
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: Padding(
@@ -53,6 +56,7 @@ class Onboarding1Screen extends StatelessWidget {
 
               const SizedBox(height: 48),
 
+              // 3. Main Title - Line by Line
               const Text(
                 'Trusted Service,',
                 style: TextStyle(
@@ -68,13 +72,15 @@ class Onboarding1Screen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF0066FF),
+                  color: Color(0xFF0066FF), // Blue color
                   height: 1.2,
                 ),
                 textAlign: TextAlign.center,
               ),
+
               const SizedBox(height: 24),
 
+              // 4. Description Text - Line by Line
               const Text(
                 'Connect with licensed pharmacists and',
                 style: TextStyle(
@@ -104,7 +110,81 @@ class Onboarding1Screen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
 
-              const Spacer(),
+              const SizedBox(height: 40),
+
+              // 5. Page Indicator (3 dots, first one active)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 24,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF0066FF),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 40),
+
+              // 6. Next Button
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // TODO: Go to next onboarding screen
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0066FF),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Next',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
             ],
           ),
         ),

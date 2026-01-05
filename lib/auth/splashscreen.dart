@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:friecca/onboarding/onboarding1.dart';
 import 'dart:math' as math;
 
 void main() {
   runApp(const MyApp());
 }
-
 
 class Responsive {
   static double scale(BuildContext context) {
@@ -22,7 +22,6 @@ class Responsive {
   }
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
 }
 
 /* =========================
-   SPLASH SCREEN
+   SPLASH SCREEN - Auto Navigate to Onboarding After 3 Seconds
 ========================= */
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -57,6 +56,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
+    // Start animations
     _dotsController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
@@ -77,6 +77,23 @@ class _SplashScreenState extends State<SplashScreen>
     _pulseAnimation = Tween(begin: 1.0, end: 1.08).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
+
+    // Navigate to Onboarding1Screen after 3 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const Onboarding1Screen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+            transitionDuration: const Duration(milliseconds: 800),
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -178,17 +195,14 @@ class _SplashScreenState extends State<SplashScreen>
                             ShaderMask(
                               shaderCallback: (bounds) =>
                                   const LinearGradient(
-                                colors: [
-                                  Color(0xFF0066FF),
-                                  Color(0xFF0052CC)
-                                ],
+                                colors: [Color(0xFF0066FF), Color(0xFF0052CC)],
                               ).createShader(bounds),
                               child: Text(
                                 'Friecca',
                                 style: TextStyle(
                                   fontSize: titleSize,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Colors.white, // Shader makes it gradient
                                 ),
                               ),
                             ),
@@ -208,10 +222,7 @@ class _SplashScreenState extends State<SplashScreen>
                               height: 3,
                               decoration: BoxDecoration(
                                 gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF0066FF),
-                                    Color(0xFF00CCFF)
-                                  ],
+                                  colors: [Color(0xFF0066FF), Color(0xFF00CCFF)],
                                 ),
                                 borderRadius: BorderRadius.circular(2),
                               ),
