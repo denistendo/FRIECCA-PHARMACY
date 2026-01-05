@@ -51,7 +51,30 @@ class Onboarding1Screen extends StatelessWidget {
                 ),
               ),
 
-              const Spacer(), // Placeholder text
+              const SizedBox(height: 48),
+
+              const Text(
+                'Trusted Service,',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  height: 1.2,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Text(
+                'Quality Care',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF0066FF),
+                  height: 1.2,
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+              
               const Spacer(),
             ],
           ),
