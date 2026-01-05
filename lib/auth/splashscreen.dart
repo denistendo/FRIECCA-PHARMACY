@@ -5,9 +5,7 @@ void main() {
   runApp(const MyApp());
 }
 
-/* =========================
-   RESPONSIVE HELPER
-========================= */
+
 class Responsive {
   static double scale(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -24,9 +22,7 @@ class Responsive {
   }
 }
 
-/* =========================
-   APP
-========================= */
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
