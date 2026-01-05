@@ -73,8 +73,37 @@ class Onboarding1Screen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
+              const SizedBox(height: 24),
 
-              
+              const Text(
+                'Connect with licensed pharmacists and',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Text(
+                'access genuine medication from Friecca',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Text(
+                'Pharmacy LTD.',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF0066FF),
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+
               const Spacer(),
             ],
           ),
