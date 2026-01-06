@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:friecca/auth/splashscreen.dart';
-import 'package:friecca/onboarding/onboarding1.dart';
+import 'package:friecca/onboarding/onboardingscreen1.dart';
 import 'package:friecca/onboarding/onboardingscreen2';
 
 void main() {

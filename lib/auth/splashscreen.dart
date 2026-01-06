@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:friecca/onboarding/onboarding1.dart';
+import 'package:friecca/onboarding/onboardingscreen1.dart';
 import 'dart:math' as math;
 
 void main() {
