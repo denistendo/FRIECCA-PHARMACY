@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:friecca/auth/splashscreen.dart';
 import 'package:friecca/onboarding/onboarding1.dart';
+import 'package:friecca/onboarding/onboardingscreen2';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const SplashScreen(),
+      home: const OnboardingScreen2(),
     );
   }
 }

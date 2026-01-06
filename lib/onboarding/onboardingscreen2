@@ -1,1 +1,63 @@
-stf
+import 'package:flutter/material.dart';
+
+class OnboardingScreen2 extends StatelessWidget {
+  const OnboardingScreen2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            children: [
+              // Back Button (Chevron Left)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Goes back to Onboarding1
+                  },
+                  icon: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child:Icon(
+                      Icons.chevron_left,
+                      size: 32,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Placeholder for now
+              const Expanded(
+                child: Center(
+                  child: Text(
+                    'Onboarding Screen 2',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 40),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
