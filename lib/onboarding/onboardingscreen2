@@ -59,7 +59,30 @@ class OnboardingScreen2 extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 40),
+              // Add after the image container:
+
+              const SizedBox(height: 48),
+
+              const Text(
+                'Prescriptions',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  height: 1.2,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Text(
+                '& Reminders',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF0066FF),
+                  height: 1.2,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
