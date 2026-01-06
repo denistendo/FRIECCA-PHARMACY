@@ -17,7 +17,7 @@ class OnboardingScreen2 extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: IconButton(
                   onPressed: () {
-                    Navigator.of(context).pop(); // Goes back to Onboarding1
+                    Navigator.of(context).pop();
                   },
                   icon: Container(
                     padding: const EdgeInsets.all(8),
@@ -32,10 +32,10 @@ class OnboardingScreen2 extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child:Icon(
+                    child: Icon(
                       Icons.chevron_left,
                       size: 32,
-                      color: Colors.grey[800],
+                      color: Colors.grey.shade800,
                     ),
                   ),
                 ),
@@ -43,15 +43,16 @@ class OnboardingScreen2 extends StatelessWidget {
 
               const SizedBox(height: 20),
 
+              // Image section
               Expanded(
                 flex: 3,
                 child: Container(
                   width: double.infinity,
+                  padding: const EdgeInsets.all(40),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFE8D6), // Soft peach/orange background
+                    color: const Color(0xFFFFE8D6),
                     borderRadius: BorderRadius.circular(32),
                   ),
-                  padding: const EdgeInsets.all(40),
                   child: Image.asset(
                     'assets/images/prescription.png',
                     fit: BoxFit.contain,
@@ -59,10 +60,9 @@ class OnboardingScreen2 extends StatelessWidget {
                 ),
               ),
 
-              // Add after the image container:
-
               const SizedBox(height: 48),
 
+              // Title line 1
               const Text(
                 'Prescriptions',
                 style: TextStyle(
@@ -73,16 +73,45 @@ class OnboardingScreen2 extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
+
+              // Title line 2: "& Reminders"
+              RichText(
+                textAlign: TextAlign.center,
+                text: const TextSpan(
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    height: 1.2,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: '& ',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    TextSpan(
+                      text: 'Reminders',
+                      style: TextStyle(color: Color(0xFF0066FF)),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              // Description text
               const Text(
-                '& Reminders',
+                'Easily upload prescriptions and\n'
+                'set smart reminders so you never\n'
+                'miss a dose. Your health, organized.',
                 style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF0066FF),
-                  height: 1.2,
+                  fontSize: 16,
+                  color: Colors.grey,
+                  height: 1.6,
                 ),
                 textAlign: TextAlign.center,
               ),
+
+              const SizedBox(height: 40),
             ],
           ),
         ),
